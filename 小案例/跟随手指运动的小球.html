@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+div {
+    width: 600px;
+    height: 600px;
+    background-color: gray;
+    position: relative;
+    margin: 0 auto;
+}
+
+div p {
+    width: 50px;
+    height: 50px;
+    background-color: pink;
+    border-radius: 50%;
+    position: absolute;
+}
+
+</style>
+</head>
+<body>
+<div id="box">
+    <p></p>
+</div>
+<script>
+var box = document.querySelector("#box");
+var p = document.querySelector("#box p");
+// 允许的最大left值
+var maxLeft = box.offsetWidth - p.offsetWidth;
+var maxTop = box.offsetHeight - p.offsetHeight;
+box.onmousemove = function (e){
+    // 计算出来当前的left值
+    var left = e.clientX - box.offsetLeft - p.offsetWidth / 2;
+    var top = e.clientY - box.offsetTop - p.offsetHeight / 2;
+    //限制左边缘和上边缘
+    left = left <= 0 ? 0 : left;
+    top = top <= 0 ? 0 : top;
+    //限制右边缘和下边缘
+    left = left >= maxLeft ? maxLeft : left;
+    top = top >= maxTop ? maxTop : top;
+    p.style.left = left + "px";
+    p.style.top = top + "px";
+}
+</script>
+</body>
+</html>

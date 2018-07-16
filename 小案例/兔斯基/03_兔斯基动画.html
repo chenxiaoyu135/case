@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+div{
+    width: 48px;
+    height: 48px;
+    background: url("tusiji.png");
+    animation: move 1s steps(11, end) infinite alternate;
+}
+@keyframes move {
+    from{
+        background-position-x: 0;
+    }
+    to{
+        background-position-x: calc(-48px * 11);
+    }
+}
+</style>
+</head>
+<body>
+<div></div>
+</body>
+</html>

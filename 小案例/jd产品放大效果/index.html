@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.product {
+    width: 350px;
+    height: 350px;
+    margin: 100px;
+    position: relative;
+}
+
+.product .small {
+    width: 350px;
+    border: 1px solid #000;
+    position: relative;
+}
+.product .small:hover{
+    cursor: all-scroll;
+}
+
+.product .small .popup {
+    width: 200px;
+    height: 200px;
+    background-color: #e1ff0f;
+    opacity: 0.5;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: none;
+}
+
+.product .big {
+    width: 550px;
+    height: 550px;
+    position: absolute;
+    top: 0;
+    left: 352px;
+    overflow: hidden;
+    display: none;
+}
+
+.product .big img {
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+</style>
+</head>
+<body>
+<div class="product">
+    <div class="small">
+        <img src="small.jpg" alt="">
+        <div class="popup"></div>
+    </div>
+    <div class="big">
+        <img src="big.jpg" alt="">
+    </div>
+</div>
+<script>
+var product = document.querySelector(".product");
+var small = document.querySelector(".product .small");
+var popup = document.querySelector(".product .small .popup");
+var bigImg = document.querySelector(".product .big img");
+var big = document.querySelector(".product .big");
+
+var maxLeft;
+var maxTop;
+small.onmouseenter = function (){
+    popup.style.display = "block";
+    big.style.display = "block";
+    
+    maxLeft = small.offsetWidth - popup.offsetWidth;
+    maxTop = small.offsetHeight - popup.offsetHeight;
+};
+small.onmouseleave = function (){
+    popup.style.display = "none";
+    big.style.display = "none";
+};
+
+small.onmousemove = function (e){
+    var left = e.clientX - product.offsetLeft - popup.offsetWidth / 2;
+    var top = e.clientY - product.offsetTop - popup.offsetHeight / 2;
+
+    left = left <= 0 ? 0 : left;
+    top = top <= 0 ? 0 : top;
+
+    left = left >= maxLeft ? maxLeft : left;
+    top = top >= maxTop ? maxTop : top;
+    popup.style.left = left + "px";
+    popup.style.top = top + "px";
+    
+    bigImg.style.left = -left / maxLeft * (bigImg.offsetWidth - big.offsetWidth) + "px";
+    bigImg.style.top = -top / maxTop *(bigImg.offsetHeight - big.offsetHeight) + "px";
+}
+
+</script>
+</body>
+</html>

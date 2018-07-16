@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+div {
+    width: 30px;
+    height: 30px;
+    background-color: pink;
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+</style>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+var divs = document.querySelectorAll("div");
+document.onmousemove = function (e){
+    var left = e.clientX;
+    var top = e.clientY;
+    for(let i = 0; i < divs.length; i++){
+        setTimeout(function (){
+            divs[i].style.left = left + "px";
+            divs[i].style.top = top + "px";
+        }, 30 * i);
+    }
+}
+</script>
+</body>
+</html>

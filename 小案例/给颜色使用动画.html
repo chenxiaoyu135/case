@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+div{
+    width: 100px;
+    height: 100px;
+    background-color: lightpink;
+}
+p{
+    color: black;
+}
+</style>
+<script src="jquery-3.3.1.js"></script>
+<script src="jquery.color.js"></script>
+<script>
+$(function (){
+    function step(){
+        $("div").animate({
+            backgroundColor: "#ff0000"
+        }, 1000).animate({
+            backgroundColor: "#33ff23"
+        }, 1000, function(){
+            step();
+        });
+    }
+    step();
+    $("p").animate({
+        color: "blue"
+    }, 1000);
+})
+</script>
+</head>
+<body>
+<div></div>
+<p>我的颜色会变化</p>
+</body>
+</html>

@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+}
+.container {
+    width: 800px;
+    height: 640px;
+    background-color: lightgray;
+    border: 1px solid #000;
+    position: relative;
+    margin: 0px auto;
+}
+
+.container > div {
+    width: 40px;
+    height: 40px;
+    background-color: pink;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container > div:nth-child(1) {
+    left: 80px;
+}
+
+.container > div:nth-child(2) {
+    left: 40px;
+}
+p{
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    font-size: 80px;
+    line-height: 100px;
+    color: red;
+}
+</style>
+
+</head>
+<body>
+<p class="score">0</p>
+<div class="container">
+    <div></div>
+    <div></div>
+    <div></div>
+</div>
+
+<script>
+var pScore = document.querySelector(".score");
+var container = document.querySelector(".container");
+var divs = document.querySelectorAll(".container > div");
+var snakeBody = [divs[0], divs[1], divs[2]]; // 表示蛇的身体
+var direction = "right"; // 表示蛇运动的方向
+var score = 0;
+var speed = 1;
+var food;
+init();
+
+function init(){
+    move();  // 让蛇跑起来
+    listenKey(); // 监听用户的按键
+    // 投放食物
+    putFood();
+}
+
+/*监听用户的按键*/
+function listenKey(){
+    // 检测用户的按键
+    document.onkeydown = function (e){
+        switch (e.keyCode){
+            case 37:  // left
+                if (direction == "right") return;
+                direction = "left";
+                break;
+            case  38:
+                if (direction == "down") return;
+                direction = "up";
+                break;
+            case 39:
+                if (direction == "left") return;
+                direction = "right";
+                break;
+            case 40:
+                if (direction == "up") return;
+                direction = "down";
+                break;
+        }
+    }
+}
+
+/*让蛇的身体跑起来*/
+function move(){
+    setTimeout(function step(){
+        var lastDiv = snakeBody.pop();
+        if (direction == "down"){
+            lastDiv.style.left = snakeBody[0].offsetLeft + "px";
+            lastDiv.style.top = snakeBody[0].offsetTop + 40 + "px";
+        }else if (direction == "up"){
+            lastDiv.style.left = snakeBody[0].offsetLeft + "px";
+            lastDiv.style.top = snakeBody[0].offsetTop - 40 + "px";
+        }else if (direction == "left"){
+            lastDiv.style.left = snakeBody[0].offsetLeft - 40 + "px";
+            lastDiv.style.top = snakeBody[0].offsetTop + "px";
+        }else{
+            lastDiv.style.left = snakeBody[0].offsetLeft + 40 + "px";
+            lastDiv.style.top = snakeBody[0].offsetTop + "px";
+        }
+        snakeBody.unshift(lastDiv);
+        // 判断游戏是否结束
+        if (isDead()){
+            container.innerHTML = "<h1 style='width: 100%" +
+                "; height:100%; font-size: 100px; text-align: center; line-height: 640px'>游戏结束</h1>";
+            return;
+        }
+        eatFood();
+        setTimeout(step, 1000 / speed);
+    }, 0)
+}
+
+/*判断蛇是否碰到了障碍物 (容器的边缘)*/
+function isDead(){
+    var snakeHead = snakeBody[0];
+    var left = snakeHead.offsetLeft;
+    var top = snakeHead.offsetTop;
+    /*if(left < 0 || top < 0 || left > 760 || top > 600){
+        return true;
+    }
+    return false;*/
+    return left < 0 || top < 0 || left > 760 || top > 600;
+}
+
+/*投放食物*/
+function putFood(){
+    // 创建一个div, 然后把这个地方背景变化
+    food = document.createElement("div");
+    var left;
+    var top;
+    while (true){
+        var flag = true;  // 是否找到了正确值
+        left = randomInt(0, 19) * 40;
+        top = randomInt(0, 15) * 40;
+        for (var div of snakeBody){
+            if (div.offsetLeft == left && div.offsetTop == top){
+                flag = false;
+                break;
+            }
+        }
+        if (flag) break;
+    }
+    food.style.left = left + "px";
+    food.style.top = top + "px";
+    food.style.backgroundColor = "green";
+    container.appendChild(food);
+}
+
+/*吃食物*/
+function eatFood(){
+    var snakeHead = snakeBody[0];
+    if(snakeHead.offsetLeft == food.offsetLeft && snakeHead.offsetTop == food.offsetTop){
+        food.style.backgroundColor = "pink";
+        snakeBody.push(food);
+        score += 100;
+        pScore.innerHTML = score;
+        speed += 0.2;
+        putFood();
+    }
+}
+/**
+ 返回随机的 [from, to] 之间的整数(包括from，也包括to)
+ */
+function randomInt(from, to){
+    return parseInt(Math.random() * (to - from + 1) + from);
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+div{
+    width: 100px;
+    height: 100px;
+    border: 1px solid red;
+    background-color: pink;
+}
+
+.style1{
+     width: 200px;
+     height: 300px;
+     border: 10px solid #000;
+     background-color: red;
+ }
+.style2{
+    width: 100px;
+    height: 300px;
+    border: 10px solid blue;
+    background-color: black;
+}
+.style3{
+    width: 500px;
+    height: 300px;
+    border: 10px solid green;
+    background-color: #aaaa00;
+}
+</style>
+</head>
+<body>
+<div class="a"></div>
+<script>
+var div = document.querySelector("div");
+var ss = [" style1", " style2", " style3"];
+var index = 0;
+div.onclick = function (){
+    div.className = ss[index++ % ss.length];
+}
+</script>
+</body>
+</html>

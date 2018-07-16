@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>11_阿里4</title>
+</head>
+<body>
+<!--
+1. 难度系数: ★★★★
+2. 技术点:
+  1). 变量提升
+  2). this
+  3). 运算符优先级
+  4). 原型与原型链
+  5). 全局变量污染
+-->
+<script type="text/javascript">
+  function Person() {
+    getAge = function () {
+      console.log(10)
+    };
+    return this
+  }
+  Person.getAge = function () {
+    console.log(20)
+  };
+  Person.prototype.getAge = function () {
+    console.log(30)
+  };
+  var getAge = function () {
+    console.log(40)
+  };
+  function getAge() {
+    console.log(50)
+  }
+  Person.getAge(); //20
+  getAge(); // ? 40
+  Person().getAge(); // ?
+  getAge(); // ?
+  new Person.getAge(); // ?
+  new Person().getAge(); // ? 30
+
+
+
+  //个人理解:
+  // 由于存在申明提前,所以预处理后得到的代码顺序为:
+  // var getAge;
+  // function Person() {
+  //     getAge = function () {
+  //         console.log(10)
+  //     };
+  //     return this
+  // }
+  // function getAge() {
+  //     console.log(50)
+  // }
+  // Person.getAge = function () {
+  //     console.log(20)
+  // };
+  // Person.prototype.getAge = function () {
+  //     console.log(30)
+  // };
+  // getAge = function () {
+  //     console.log(40)
+  // };
+
+  // Person.getAge(); //20
+  // getAge(); //40
+  // Person().getAge(); //40 window.getAge(); 40 ?   理解错误
+  // getAge(); //40   window.getAge(); 40  理解错误
+  // new Person.getAge();// ? undefined ; 理解错误
+  // new Person().getAge();// ? 实例对象.getAge() 本身没有查找原型  30
+
+</script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body {
+    height: 100%;
+    background-color: black;
+}
+body{
+    position: relative;
+}
+div{
+    position: absolute;
+    border-radius: 50%;
+}
+</style>
+</head>
+<body>
+<script>
+for (var i = 0; i < 30; i++){
+    createCircle(document.body);
+}
+
+/*
+创建一个元素, 这个元素的大小随机, 位置随机, 背景色随机
+然后再把这个元素添加到指定的父容器中.
+*/
+function createCircle(parent){
+    var ele = document.createElement("div");
+    var wh = randomInt(20, 100);
+    var style = ele.style;
+    
+    style.width = wh + "px";
+    style.height = wh + "px";
+    style.left = randomInt(0, parent.offsetWidth - wh) + "px";
+    style.top = randomInt(0, parent.offsetHeight - wh) + "px";
+    
+    style.backgroundColor = "rgba(" + randomInt(0, 255) + "," + randomInt(0, 255) + "," + randomInt(0, 255) + "," + Math.random() + ")"
+    // 把创建的节点添加到指定的父容器中
+    parent.appendChild(ele);
+}
+function randomInt(m, n){
+    return parseInt(Math.random() * (n - m + 1) + m)
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+@charset "utf-8";
+* {
+  margin: 0;
+  padding: 0;
+}
+.wrap {
+  width: 800px;
+  height: 100px;
+  margin: 50px auto;
+}
+.wrap ul {
+  width: 100%;
+  height: 95px;
+  background-color: black;
+  list-style: none;
+  position: relative;
+}
+.wrap ul li {
+  width: 80px;
+  height: 80px;
+  float: left;
+  color: #bfbfbf;
+  text-align: center;
+  line-height: 30px;
+  margin-top: 15px;
+}
+.wrap ul li span:last-child {
+  font-size: 12px;
+}
+.wrap ul .inner {
+  width: 80px;
+  height: 5px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: blue;
+  transition: all 0.3s cubic-bezier(0.2, 0.3, 1, 0.9);
+}
+.wrap ul li:hover {
+  color: #32f7eb;
+}
+.wrap ul li:nth-child(1):hover ~ div {
+  left: 0px;
+}
+.wrap ul li:nth-child(2):hover ~ div {
+  left: 80px;
+}
+.wrap ul li:nth-child(3):hover ~ div {
+  left: 160px;
+}
+.wrap ul li:nth-child(4):hover ~ div {
+  left: 240px;
+}
+.wrap ul li:nth-child(5):hover ~ div {
+  left: 320px;
+}
+.wrap ul li:nth-child(6):hover ~ div {
+  left: 400px;
+}
+.wrap ul li:nth-child(7):hover ~ div {
+  left: 480px;
+}
+.wrap ul li:nth-child(8):hover ~ div {
+  left: 560px;
+}
+.wrap ul li:nth-child(9):hover ~ div {
+  left: 640px;
+}
+.wrap ul li:nth-child(10):hover ~ div {
+  left: 720px;
+}

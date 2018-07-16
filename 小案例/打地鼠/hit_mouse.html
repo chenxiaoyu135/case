@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+.wrap {
+    width: 800px;
+    height: 600px;
+    margin: 30px auto;
+    
+}
+
+.wrap h1 {
+    text-align: center;
+    font-size: 40px;
+}
+
+.wrap .area {
+    width: 800px;
+    height: 550px;
+    background-color: lightblue;
+    position: relative;
+}
+
+.wrap button {
+    width: 200px;
+    height: 50px;
+    display: block;
+    font-size: 30px;
+    margin: 0 auto;
+}
+
+.wrap .area img.mouse {
+    width: 80px;
+    height: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+    <h1>0</h1>
+    <div class="area">
+        <!--<img src="mouse.png" alt="" class="mouse">-->
+    </div>
+    <button id="btn">开始游戏</button>
+</div>
+<script>
+var area = document.querySelector(".wrap .area");
+var btn = document.querySelector(".wrap button");
+var scoreEle = document.querySelector(".wrap h1");
+btn.onclick = function (){
+    autoCreate();
+};
+
+/*
+自动的没隔一s中添加一个mouse
+*/
+function autoCreate(){
+    area.innerHTML = "";  // 先清除一下区域的其他元素
+    btn.disabled = true;
+    btn.innerHTML = "游戏中";
+    score = 0;
+    scoreEle.innerHTML = "分数:" + score;
+
+    var time = 1000;
+
+    function step(){
+        var mouse = createMouse(area);  // 创建mouse, 并添加到指定的容器
+        addClickEvent(mouse); // 给每个mouse注册点击事件
+        move(mouse); //让生成的这个mouse开始运动
+        // 判断游戏是否需要结束
+        if (isOver()){
+            area.innerHTML = "<img src='end.png'>";
+            btn.disabled = false;
+            btn.innerHTML = "开始游戏";
+            return;
+        }
+        var r = parseInt(score / 1000);  //
+        setTimeout(step, time / (r + 1));
+    }
+
+    step();
+}
+
+/*判断游戏是否结束  true表示游戏结束, false表示继续*/
+function isOver(){
+    // 判断容器中的mouse的数量
+    var count = area.childElementCount;
+    if (count >= 10) return true;
+    return false;
+}
+
+var score = 0;
+
+/*
+给每个mouse注册点事件
+*/
+function addClickEvent(mouse){
+    mouse.onclick = function (){
+        this.parentElement.removeChild(this);
+        score += 100;
+        scoreEle.innerHTML = "分数:" + score;
+    }
+}
+
+/*
+让mouse在他的区域自由的运动
+*/
+function move(mouse){
+    var speedX = randomInt(-10, 10),
+        speedY = randomInt(-10, 10);
+
+    var maxLeft = area.offsetWidth - 80,
+        maxTop = area.offsetHeight - 100;
+
+    setTimeout(function step(){
+        var left = mouse.offsetLeft + speedX;
+        var top = mouse.offsetTop + speedY;
+
+        left = left <= 0 ? 0 : left; //不超出左边缘
+        top = top <= 0 ? 0 : top; //
+        left = left >= maxLeft ? maxLeft : left; //
+        top = top >= maxTop ? maxTop : top; //
+
+        //左边缘和右边缘
+        speedX = left == 0 || left == maxLeft ? speedX * -1 : speedX;
+        // 上边缘和下边缘
+        speedY = top == 0 || top == maxTop ? speedY * -1 : speedY;
+
+        mouse.style.left = left + "px";
+        mouse.style.top = top + "px";
+        setTimeout(step, 20)
+    }, 0)
+}
+/*
+声明一个mouse, 并添加到指定的区域中
+ */
+function createMouse(parent){
+    var img = document.createElement("img");
+    img.src = "mouse.png";
+    img.className = "mouse";
+    img.style.left = randomInt(0, parent.offsetWidth - 80) + "px";
+    img.style.top = randomInt(0, parent.offsetHeight - 100) + "px";
+    parent.appendChild(img);
+    return img;
+}
+
+function randomInt(m, n){
+    return parseInt(Math.random() * (n - m + 1) + m);
+}
+</script>
+</body>
+</html>

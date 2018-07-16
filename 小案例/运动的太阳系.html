@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+*{
+    padding: 0;
+    margin: 0;
+}
+html, body, .solar{
+    height: 100%;
+    background-color: black;
+    position: relative;
+    overflow: hidden;
+}
+.circle, .circle{
+    border-radius: 50%;
+}
+
+.center {
+    position: absolute;
+    margin: auto;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.solar .sun{
+    width: 100px;
+    height: 100px;
+    
+    background: radial-gradient(circle farthest-side at center, white, gold);
+    box-shadow: 0 0 20px 10px gold;
+}
+
+.solar .earth{/*轨道*/
+    width: 400px;
+    height: 400px;
+    border: 1px solid white;
+    
+    animation: rotate 20s linear infinite;
+}
+@keyframes rotate {
+    0%{
+       transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(360deg);
+    }
+}
+
+.solar .earth::before{
+    content: '';
+    display: block;
+    width: 60px;
+    height: 60px;
+    background: radial-gradient(circle at 30% 30%, blue, red);
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translateY(-50%);
+    animation: earth_self_rotate 5s linear infinite;
+}
+@keyframes earth_self_rotate {
+    0%{
+        transform: translateY(-50%) rotate(0deg);
+    }
+    100%{
+        transform: translateY(-50%) rotate(360deg);
+    }
+}
+
+.solar .earth .moon {
+    width: 200px;
+    height: 200px;
+    border: 1px solid white;
+    margin: 0 auto;
+    top: -100px;
+    animation: rotate 3s linear infinite;
+}
+.solar .earth .moon::before{
+    content: '';
+    display: block;
+    width: 30px;
+    height: 30px;
+    background: radial-gradient(circle at center, white, gray);
+    border-radius: 50%;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto;
+    transform: translateY(-50%);
+}
+
+</style>
+</head>
+<body>
+<div class="solar">
+    <div class="sun center circle">
+    
+    </div>
+    <div class="earth center circle"><!--轨道-->
+        <div class="moon circle center"></div>
+    </div>
+</div>
+</body>
+</html>

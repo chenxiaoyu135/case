@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+</head>
+<body>
+<label>全选<input type="checkbox" id="all"></label>
+<label>反选<input type="checkbox" id="inverse"></label>
+<br>
+<label>看电影 <input type="checkbox" class="loves"></label>
+<label>打游戏 <input type="checkbox" class="loves"></label>
+<label>敲代码 <input type="checkbox" class="loves"></label>
+<label>追韩剧 <input type="checkbox" class="loves"></label>
+<script>
+var all = document.querySelector("#all");
+var inverse = document.querySelector("#inverse");
+
+var allLoves = document.querySelectorAll(".loves");
+
+var countTrue = 0;
+
+//给全选按钮添加时间
+all.onchange = function (){
+    // 根据全年按钮的状态来决定每个爱好的状态
+    for (var i = 0; i < allLoves.length; i++){
+        allLoves[i].checked = all.checked;
+    }
+    calc(); // 计算选中的按钮的个数
+};
+
+inverse.onchange = function (){
+    // 反选按钮, 把各自的状态取反之后再设置回去
+    for (var i = 0; i < allLoves.length; i++){
+        allLoves[i].checked = !allLoves[i].checked;
+    }
+    //
+    calc();
+    changeAll(); // 更改全选按钮的状态
+};
+
+for (let i = 0; i < allLoves.length; i++){
+    allLoves[i].onchange = function (){
+        if(allLoves[i].checked){
+            countTrue++;
+        }else{
+            countTrue--;
+        }
+        changeAll(); // 更改全选按钮的状态
+    }
+    /*allLoves[i].onchange = (function (i){
+        return function (){
+            console.log(allLoves[i].checked);
+        }
+    })(i);*/
+}
+/*更改全选按钮的状态*/
+function changeAll(){
+    if(countTrue == 4){
+        all.checked = true;
+    }else {
+        all.checked = false;
+    }
+}
+/*计算选中的个数*/
+function calc(){
+    var count = 0;
+    for (var i = 0; i < allLoves.length; i++){
+        if (allLoves[i].checked){
+            count++;
+        }
+    }
+    countTrue = count;
+}
+</script>
+</body>
+</html>

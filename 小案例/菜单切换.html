@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test 5</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        ul{
+            width: 200px;
+            height: 400px;
+            position:relative;
+            margin-left:100px;
+            margin-top:100px;
+            list-style:none;
+            background-color: white;
+            background-color:rgba(255,255,255,0.3);
+        }
+        ul li{
+            width: 200px;
+            height: 100px;
+            font-size:20px;
+            text-align:center;
+            line-height:100px;
+            float:left;
+            transition:all 1s;
+            cursor: pointer;
+        }
+        ul li img{
+            width: 200px;
+            height: 400px;
+            position: absolute;
+            left:0;
+            top:0;
+            transition:all 1s;
+            opacity:0;
+            z-index: -1;
+        }
+
+        ul li h2:hover{
+            background-color: #f68d41;
+            color:white;
+        }
+        ul li:hover>img{
+            opacity:1;
+            left:200px;
+
+        }
+
+    </style>
+</head>
+<body>
+<ul class="wrap">
+    <li>
+        <h2>京东生鲜</h2>
+        <img src="img/1.jpg" alt="">
+    </li>
+    <li>
+        <h2>春日好惠</h2>
+        <img src="img/2.jpg" alt="">
+    </li>
+    <li>
+        <h2>魅族手机</h2>
+        <img src="img/3.jpg" alt="">
+    </li>
+    <li>
+        <h2>粮油调味</h2>
+        <img src="img/4.jpg" alt="">
+    </li>
+</ul>
+</body>
+</html>

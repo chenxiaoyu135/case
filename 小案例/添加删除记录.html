@@ -1,0 +1,163 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>添加删除记录练习</title>
+<style>
+#total {
+    width: 450px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li {
+    border: 1px solid #000;
+    padding: 5px;
+    margin: 5px;
+    background-color: #99ff99;
+    float: left;
+}
+
+.inner {
+    width: 400px;
+    border: 1px solid #000;
+    margin: 10px;
+    padding: 10px;
+    float: left;
+}
+
+#employeeTable {
+    border-spacing: 1px;
+    background-color: black;
+    margin: 80px auto 10px auto;
+}
+
+th, td {
+    background-color: white;
+}
+
+#formDiv {
+    width: 250px;
+    border: 1px solid #000;
+    margin: 50px auto 10px auto;
+    padding: 10px;
+}
+
+#formDiv input {
+    width: 100%;
+}
+
+.word {
+    width: 40px;
+}
+
+.inp {
+    width: 200px;
+}
+
+#employeeTable, #employeeTable th, #employeeTable td {
+    border: 1px solid;
+    border-spacing: 0;
+    
+}
+</style>
+</head>
+<body>
+
+<table id="employeeTable">
+    <tr>
+        <th>姓名</th>
+        <th>电邮</th>
+        <th>工资</th>
+        <th>操作</th>
+    </tr>
+    <tr>
+        <td>Tom</td>
+        <td>tom@tom.com</td>
+        <td>5000</td>
+        <td><a href="deleteEmp?id=001">Delete</a></td>
+    </tr>
+    <tr>
+        <td>Jerry</td>
+        <td>jerry@sohu.com</td>
+        <td>8000</td>
+        <td><a href="deleteEmp?id=002">Delete</a></td>
+    </tr>
+    <tr>
+        <td>Bob</td>
+        <td>bob@tom.com</td>
+        <td>10000</td>
+        <td><a href="deleteEmp?id=003">Delete</a></td>
+    </tr>
+
+</table>
+
+<div id="formDiv">
+    
+    <h4>添加新员工</h4>
+    
+    <table>
+        <tr>
+            <td class="word">姓名:</td>
+            <td class="inp">
+                <input type="text" name="empName" id="empName" value="李四"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="word">电邮:</td>
+            <td class="inp">
+                <input type="text" name="email" id="email" value="abd@sohu.com"/>
+            </td>
+        </tr>
+        <tr>
+            <td class="word">工资:</td>
+            <td class="inp">
+                <input type="text" name="salary" id="salary" value="10000"/>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button id="addEmpButton" value="abc">添加</button>
+            </td>
+        </tr>
+    </table>
+</div>
+<script src="jquery-3.3.1.js"></script>
+<script>
+$(function (){
+    /*$("a").click(function (){
+        // 找到tr, 删除tr
+        $(this).parent().parent().remove();
+        return false;  // 停止进一步传播, 和阻止默认行为
+    });*/
+
+    /*$("#employeeTable").on("click", "a", function(){
+        $(this).parent().parent().remove();
+        return false;
+    })*/
+    
+    employeeTable.onclick = function(e){
+        e.preventDefault();
+        if(e.target.tagName.toLowerCase() == "a"){
+            $(e.target.parentElement.parentElement).remove();
+        }
+    };
+    
+    $("#addEmpButton").click(function (){
+        $("<tr>")
+            .append("<td>" + $("#empName").val() + "</td>")
+            .append("<td>" + $("#email").val() + "</td>")
+            .append("<td>" + $("#salary").val() + "</td>")
+            .append("<td><a href='#'>x</a></td>")
+                        .appendTo("#employeeTable");
+    });
+})
+
+</script>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<script src="jquery-3.3.1.js"></script>
+<script>
+$(function (){
+
+    // 全选的按钮的点击事件
+    $("#all").click(function (){
+        $(".loves").prop("checked", $(this).prop("checked"));
+        $("#notAll").prop("checked", false);
+    });
+    // 全不选的按钮
+    $("#notAll").click(function (){
+        $(".loves").prop("checked", false);
+        $("#all").prop("checked", false);
+    });
+
+   
+    // 每个爱好添加点击事件
+    $(".loves").click(function (){
+        calcCount();
+    });
+    
+    $("#reverse").click(function (){
+        $(".loves").each(function (index, ele){
+            $(ele).prop("checked", !$(ele).prop("checked"));
+        });
+        calcCount();
+    });
+    
+    /*
+    计算选中的个数, 确定全选和全不选按钮的状态
+     */
+    function calcCount(){
+        var count = 0;
+        // 这个each方法是jquery对象的方法, 用来遍历jquery对象中的dom元素
+        $(".loves").each(function (index, ele){
+            $(ele).prop("checked") && count++;
+        });
+        
+        if(count == 4){
+            $("#all").prop("checked", true)
+        }else{
+            $("#all").prop("checked", false);
+        }
+        
+        if(count == 0){
+            $("#notAll").prop("checked", true)
+        }else{
+            $("#notAll").prop("checked", false)
+        }
+    }
+})
+</script>
+</head>
+<body>
+<label>全选<input type="checkbox" id="all"></label>
+<label>反选<input type="checkbox" id="reverse"></label>
+<label>全不选<input type="checkbox" id="notAll"></label>
+<br>
+<label>看电影 <input type="checkbox" class="loves"></label>
+<label>打游戏 <input type="checkbox" class="loves"></label>
+<label>敲代码 <input type="checkbox" class="loves"></label>
+<label>追韩剧 <input type="checkbox" class="loves"></label>
+</body>
+</html>

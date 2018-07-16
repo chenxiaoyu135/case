@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+div {
+    width: 200px;
+    height: 300px;
+    border: 1px solid #000;
+    overflow: auto;
+}
+</style>
+</head>
+<body>
+<div>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+    我是一个比较长的文本<br>
+</div>
+<script>
+var div = document.querySelector("div");
+/*setTimeout(function move(){
+    var start = div.scrollTop;
+    div.scrollTop += 2;
+    if (start == div.scrollTop) return;
+    setTimeout(move, 20);
+}, 0)*/
+
+var id = setInterval(function (){
+    var start = div.scrollTop;
+    div.scrollTop += 2;
+    console.log("aaaa")
+    if (start == div.scrollTop){
+        clearInterval(id); // 停止interval只能这样停
+    }
+}, 20)
+
+/*var id;
+id = setTimeout(function move(){
+    var start = div.scrollTop;
+    div.scrollTop += 2;
+    
+    id = setTimeout(move, 20);
+    if (start == div.scrollTop){
+        clearTimeout(id);  //定时器执行之前停止可以.
+    }
+
+}, 0)*/
+
+// div.scrollTop = 200;
+/*div.onscroll = function (){
+    console.log("div...", div.scrollTop);
+    
+}*/
+</script>
+</body>
+</html>

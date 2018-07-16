@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test 3</title>
+    <style>
+        @keyframes move{
+            0%{
+                transform: rotate(0deg);
+            }
+            100%{
+                transform: rotate(360deg);
+            }
+        }
+        .out{
+            width: 400px;
+            height: 400px;
+            margin:100px auto;
+            position: relative;
+        }
+        .wrap{
+            width: 100%;
+            height: 100%;
+            position:relative;
+            animation:move 5s linear infinite;
+        }
+        .wrap>div{
+            position: absolute;
+        }
+        .wrap .left_top{
+             width: 200px;
+             height: 100px;
+             left:0;
+             top:100px;
+             background-color:green ;
+             border-radius:150px 0 0 0;
+         }
+        .wrap .right_top{
+            width: 100px;
+            height: 200px;
+            left:200px;
+            top:0;
+            background-color:red;
+            border-radius:0 150px 0 0;
+        }
+        .wrap .left_bottom{
+            width: 100px;
+            height: 200px;
+            left:100px;
+            top:200px;
+            background-color:pink;
+            border-radius:0  0 0 150px;
+        }
+        .wrap .right_bottom{
+            width: 200px;
+            height: 100px;
+            left:200px;
+            top:200px;
+            background-color:blue;
+            border-radius:0  0 150px 0 ;
+        }
+        .out .center{
+            position:absolute;
+            left:160px;
+            top:160px;
+            width: 80px;
+            height: 80px;
+            color:white;
+            background-color:#d7d3d3;
+            border-radius:50%;
+            font-size:50px;
+            text-align: center;
+            line-height:80px;
+            background-color:rgba(200,200,200,0.5);
+            z-index:5;
+        }
+    </style>
+</head>
+<body>
+<div class="out">
+<div class="wrap">
+    <div class="left_top"></div>
+    <div class="right_top"></div>
+    <div class="left_bottom"></div>
+    <div class="right_bottom"></div>
+</div>
+    <div class="center">运</div>
+</div>
+</body>
+</html>

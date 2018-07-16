@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+div {
+    width: 600px;
+    height: 200px;
+    position: relative;
+    margin: 100px auto;
+}
+div span{
+    display: inline-block;
+    width: 200px;
+    height: 200px;
+    background-color: pink;
+    font-size: 150px;
+    text-align: center;
+    line-height: 200px;
+    font-weight: bold;
+    
+    position: relative;
+    transform-style: preserve-3d ;
+    perspective: 400px;
+}
+
+div span::before, div span::after{
+    content: attr(data-text);
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 200px;
+    height: 200px;
+    transition: all 0.5s;
+    transform-origin: 25px 0;
+}
+
+div span::after{
+    color: white;
+}
+div span::before{
+    color: rgba(0,0,0, 0.2);
+}
+
+div:hover span::after{
+    transform: rotateY(-30deg) skew(0, -10deg);
+}
+div:hover span::before{
+    transform:skew(0, 20deg);
+}
+</style>
+</head>
+<body>
+<div><span data-text="尚">尚</span><span data-text="硅" style="background-color:gray;">硅</span><span data-text="谷">谷</span></div>
+
+</body>
+</html>

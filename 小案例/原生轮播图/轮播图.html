@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Title</title>
+<style>
+* {
+    padding: 0;
+    margin: 0;
+}
+
+#lbt {
+    width: 600px;
+    height: 400px;
+    margin: 10px auto;
+    
+    position: relative;
+}
+
+#lbt #imgs {
+    width: 100%;
+    height: 100%;
+    
+    position: relative;
+}
+
+#lbt #imgs img {
+    width: 600px;
+    height: 400px;
+    
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    opacity: 0;
+}
+
+#lbt #imgs img:first-child {
+    opacity: 1;
+    
+}
+
+#lbt #indicator {
+    width: 120px;
+    height: 20px;
+    background-color: lightgray;
+    border-radius: 10px;
+    position: absolute;
+    bottom: 10px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+#lbt #indicator span {
+    display: block;
+    width: 10px;
+    height: 10px;
+    margin: 5px;
+    background-color: white;
+    border-radius: 50%;
+    float: left;
+}
+
+#lbt #indicator span:nth-child(1) {
+    background-color: red;
+}
+
+#lbt #preNext {
+    width: 100%;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+}
+
+#lbt #preNext span {
+    position: absolute;
+    font-size: 40px;
+    line-height: 50px;
+    background-color: gray;
+    opacity: 0;
+}
+
+#lbt #preNext span:nth-child(2) {
+    right: 0;
+}
+
+#lbt:hover #preNext span {
+    opacity: 0.5;
+}
+
+#lbt #preNext span:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+</style>
+</head>
+<body>
+<div id="lbt">
+    <div id="imgs">
+        <img src="img/1.jpeg" alt="" style="opacity: 1;"><img src="img/2.jpeg" alt=""><img src="img/3.jpeg" alt=""><img
+            src="img/4.jpeg"
+            alt=""><img
+            src="img/5.jpeg" alt=""><img src="img/6.jpeg" alt="">
+    </div>
+    <div id="indicator">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+    <div id="preNext">
+        <span>&lt;</span>
+        <span>&gt;</span>
+    </div>
+</div>
+<script>
+var lbt = document.getElementById("lbt");
+/*找到的所有的img*/
+var allImgs = document.querySelectorAll("#lbt #imgs img");
+var allSpans = document.querySelectorAll("#lbt #indicator span");
+var preNext = document.querySelectorAll("#lbt #preNext span");
+var fromIndex = 0; // 当前正在显示的图片的下标
+var toIndex = 1; // 要切换去的图片的下标
+var autoId;
+var playId;
+
+/*从fromIndex切换到toIndex
+让下标是fromIndex的img的透明从 1->0
+让下标是toIndex的img的透明度从 0->1
+*/
+function play(fromIndex, toIndex){
+    /*先把指示器切过去*/
+    changeIndicator(fromIndex, toIndex);
+    playId = setTimeout(function step(){
+        var from = allImgs[fromIndex];
+        var to = allImgs[toIndex];
+        if (from.style.opacity <= 0 || to.style.opacity >= 1) return;
+
+        from.style.opacity = +from.style.opacity - 0.02;
+        to.style.opacity = +to.style.opacity + 0.02;
+        playId = setTimeout(step, 10);
+    }, 0)
+}
+
+/*自动播放*/
+function autoPlay(){
+    autoId = setInterval(function (){
+        // autoplay的时候, toIndex应该总是比fromIndex大1
+        toIndex = fromIndex + 1;
+        if (toIndex == 6) toIndex = 0;
+
+        play(fromIndex, toIndex);
+        
+        fromIndex++;
+        if(fromIndex == 6) fromIndex = 0;
+        
+        /*fromIndex = toIndex;
+        toIndex++;
+        if (toIndex == 6) toIndex = 0;*/
+    }, 2000)
+}
+
+/*让指示器从从 formIndex 切换到 toIndex*/
+function changeIndicator(fromIndex, toIndex){
+    allSpans[fromIndex].style.backgroundColor = "white";
+    allSpans[toIndex].style.backgroundColor = "red";
+}
+
+/*做一些初始化的工作:
+1. 给span注册事件
+
+2. 给整个轮播图注册事件
+*/
+function init(){
+    /*停止自动轮播*/
+    lbt.onmouseenter = function (){
+        clearInterval(autoId);
+    }
+    /*离开真个轮播图的时候, 再重新轮播*/
+    lbt.onmouseleave = function (){
+        autoPlay();
+    }
+
+    //给左箭头添加点击事件
+    preNext[0].onclick = function (){
+        var f = fromIndex;
+        var t = fromIndex - 1;
+        if (t == -1) t = 5;
+
+        play(f, t);
+        fromIndex--;
+        if (fromIndex == -1) fromIndex = 5;
+
+    }
+    //给右箭头添加点击事件
+    preNext[1].onclick = function (){
+        var f = fromIndex;
+        var t = fromIndex + 1;
+        if (t == 6) t = 0;
+        play(f, t);
+
+        fromIndex++;
+        if (fromIndex == 6) fromIndex = 0;
+    }
+    
+    // 给所有的指示器添加 mouseenter事件
+    for (let i = 0; i < allSpans.length; i++){
+        allSpans[i].onmouseenter = function (){
+            changeIndicator(fromIndex, i);  //更改指示器的有样式
+            changeOpacity(); // 把每个图片的透明度初始化到正常值: from为1 to为0
+            play(fromIndex, i);
+            fromIndex = i;  // 把formIndex的值, 改成现在鼠标位置. 为鼠标下次更改左准备
+        }
+    }
+}
+// 把formIndex的透明改成1 其他全部是 0, 并且把正在播放的定时器给清除
+function changeOpacity(){
+    clearTimeout(playId);
+    for (var i = 0; i < allImgs.length; i++){
+        if (i == fromIndex){
+            allImgs[i].style.opacity = 1;
+        }else{
+            allImgs[i].style.opacity = 0;
+        }
+    }
+}
+init();
+autoPlay();
+</script>
+</body>
+</html>
